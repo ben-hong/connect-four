@@ -52,7 +52,7 @@ function makeHtmlBoard() {
     let headCell = document.createElement("td");
 
     // apply id to data cell
-    headCell.setAttribute("id", 'headcell');
+    headCell.setAttribute("id", x);
 
     //append data cell to 'top' row
     top.append(headCell);
@@ -75,7 +75,7 @@ function makeHtmlBoard() {
       
       // TODO: add an id, y-x, to the above table cell element
       // you'll use this later, so make sure you use y-x
-      gameCell.setAttribute("id", `${y}, ${x}`);// check
+      gameCell.setAttribute("id", `${y}-${x}`);// check
 
       // TODO: append the table cell to the table row
       gameRow.append(gameCell);
@@ -98,6 +98,11 @@ function findSpotForCol(x) {
 
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  let circle = document.createElement('div');
+  circle.classList.add("piece", `p${currPlayer}`);
+  // somhow access td id, then append circle to this td
+  let square = document.querySelector("#5-6");
+  square.append(circle);
 }
 
 /** endGame: announce game end */
@@ -129,9 +134,13 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  // loop board with every method, 
+  // if every element is not equal to null
+  
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  (currPlayer === 1) ? currPlayer = 2 : currPlayer = 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */

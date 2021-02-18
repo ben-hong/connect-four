@@ -30,45 +30,61 @@ function makeBoard() {
     }
     BOARD.push(rows);
   } 
-  console.log(BOARD);
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
 function makeHtmlBoard() {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  let htmlBoard = document.querySelector('#board');
 
   // TODO: add comment for this code
-  var top = document.createElement("tr");
+  // generate top row that user will select move on
+  // adds id to element, adds event to same element
+  let top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
 
   // TODO: add comment for this code
-  for (var x = 0; x < WIDTH; x++) {
-    var headCell = document.createElement("td");
-    headCell.setAttribute("id", x);
+  // using 'top' variable append a table data element 'width' amount of times
+  for (let x = 0; x < WIDTH; x++) {
+    //define data cell
+    let headCell = document.createElement("td");
+
+    // apply id to data cell
+    headCell.setAttribute("id", 'headcell');
+
+    //append data cell to 'top' row
     top.append(headCell);
   }
+  // append this row to the DOM
   htmlBoard.append(top);
 
   // dynamically creates the main part of html board
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
-  for (var y = 0; y < HEIGHT; y++) {
+  for (let y = 0; y < HEIGHT; y++) {
     // TODO: Create a table row element and assign to a "row" variable
+    // generate row 
+    let gameRow = document.createElement("tr");
 
-    for (var x = 0; x < WIDTH; x++) {
+    for (let x = 0; x < WIDTH; x++) {
       // TODO: Create a table cell element and assign to a "cell" variable
-
+      // generate gameCell
+      let gameCell = document.createElement('td');
+      
       // TODO: add an id, y-x, to the above table cell element
       // you'll use this later, so make sure you use y-x
+      gameCell.setAttribute("id", `${y}, ${x}`);// check
 
       // TODO: append the table cell to the table row
-
+      gameRow.append(gameCell);
     }
     // TODO: append the row to the html board
-
+    htmlBoard.append(gameRow)
   }
+ 
+
 }
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */

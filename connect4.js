@@ -92,7 +92,13 @@ function makeHtmlBoard() {
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
   // return null if none available;
-  return 0;
+  // starts at x, height is 6
+  // access BOARD [height][x], if the coordinate is equal to null, return current height
+  for (let i = HEIGHT-1; i >= 0; i--) {
+    if (BOARD[i][x] === null) {
+      return i;
+    }
+  }
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -105,8 +111,8 @@ function placeInTable(y, x) {
   let square = document.getElementById(`${y}-${x}`);
   square.append(circle);
 
+  BOARD[y][x] = currPlayer;
   // cant get y axis point
-  // circle isnt showing :(
 }
 
 /** endGame: announce game end */
@@ -199,8 +205,8 @@ function isTie(){
         return false;
     }
   }
-  return true
 }
+return true
 }
 
 makeBoard();

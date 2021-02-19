@@ -23,10 +23,11 @@ function makeBoard() {
   for (let i = 0; i < HEIGHT; i++) {
     let rows = [];
     for (let j = 0; j < WIDTH; j++) {
-      rows.push(null);
+      rows.push(undefined);
     }
     BOARD.push(rows);
   } 
+  console.log(BOARD);
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -92,9 +93,9 @@ function findSpotForCol(x) {
   // return null if none available;
   // starts at x, height is 6
   // access BOARD [height][x], if the coordinate is equal to null, return current height
-  for (let i = HEIGHT-1; i >= 0; i--) {
-    if (BOARD[i][x] === null) {
-      return i;
+  for (let y = HEIGHT-1; y >= 0; y--) {
+    if (!BOARD[y][x]) {
+      return y;
     }
   }
   return null;
@@ -144,7 +145,7 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-  if (isTie()) {
+  if (BOARD[0].every(ele => ele)) {
     return endGame('Tie game!')
   }
   
@@ -154,7 +155,7 @@ function handleClick(evt) {
   (currPlayer === 1) ? currPlayer = 2 : currPlayer = 1;
 }
 
-/** checkForWin: check board cell-by-cell for "does a win start here?" */
+
 
 function checkForWin() {
 
@@ -164,20 +165,22 @@ function checkForWin() {
    * currPlayer
    */
   function _win(cells) {
-
+Í
     // TODO: Check four cells to see if they're all legal & all color of current
     // player
     // if given cell coordinates are all same value (1 or 2 from BOARD) return true
 
     for ( let cell of cells) {
       // console.log(`cell 0 is ${cell[0]}\ncell 1 is ${cell[1]}`)
-      // are the four points under currPlayer
-      if (BOARD[cell[0]][cell[1]] !== currPlayer) {
-          return false;
-        }
+      // BOARD[cell[0]][cell[1]]
+      let y = cell[0];
+      let x = cell[1];
+      if (y < 0 || y >= HEIGHT || x < 0 || x >= WIDTH || BOARD[y][x] !== currPlayer) {
+          return false;  
+      }
     }
-    return true; 
-  }
+    return true;  
+    }
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
   // for 4 cells (starting here) for each of the different
@@ -200,17 +203,6 @@ function checkForWin() {
       }
     }
   }
-}
-
-function isTie(){
-  for (let i =0; i < HEIGHT; i++) {
-    for (let j = 0; j < WIDTH; j++) {
-      if (BOARD[i][j] === null){
-        return false;
-    }
-  }
-}
-return true
 }
 
 makeBoard();

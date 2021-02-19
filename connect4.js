@@ -91,6 +91,7 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
+  // return null if none available;
   return 0;
 }
 
@@ -101,21 +102,25 @@ function placeInTable(y, x) {
   let circle = document.createElement('div');
   circle.classList.add("piece", `p${currPlayer}`);
   // somhow access td id, then append circle to this td
-  let square = document.querySelector("#5-6");
+  let square = document.getElementById(`${y}-${x}`);
   square.append(circle);
+
+  // cant get y axis point
+  // circle isnt showing :(
 }
 
 /** endGame: announce game end */
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  var x = +evt.target.id;
+  let x = +evt.target.id;
 
   // get next spot in column (if none, ignore click)
   var y = findSpotForCol(x);
@@ -134,8 +139,13 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  
   // loop board with every method, 
-  // if every element is not equal to null
+  // if every element is not equal to null return true, game is a tie
+  // make a tie function? 
+  if (isTie()) {
+    return endGame('Tie game!')
+  }
   
 
   // switch players
@@ -161,7 +171,7 @@ function checkForWin() {
 
   // using HEIGHT and WIDTH, generate "check list" of coordinates
   // for 4 cells (starting here) for each of the different
-  // ways to win: horizontal, vertical, diagonalDR, diagonalDL
+  // ways to win: horizontal, vertical, diagonalDownRight, diagonalDownLeft
   for (var y = 0; y < HEIGHT; y++) {
     for (var x = 0; x < WIDTH; x++) {
       // TODO: assign values to the below variables for each of the ways to win
@@ -180,6 +190,17 @@ function checkForWin() {
       }
     }
   }
+}
+
+function isTie(){
+  for (let i =0; i < HEIGHT; i++) {
+    for (let j = 0; j < WIDTH; j++) {
+      if (BOARD[i][j] === null){
+        return false;
+    }
+  }
+  return true
+}
 }
 
 makeBoard();

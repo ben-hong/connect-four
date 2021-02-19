@@ -165,7 +165,6 @@ function checkForWin() {
    * currPlayer
    */
   function _win(cells) {
-Í
     // TODO: Check four cells to see if they're all legal & all color of current
     // player
     // if given cell coordinates are all same value (1 or 2 from BOARD) return true
